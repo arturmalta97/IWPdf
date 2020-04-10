@@ -1,8 +1,10 @@
 <?php
-/* Classe iwPdf
+/* 
+Classe iwPdf sdsds
 Extende métodos a instância principal da classe TCPDF 
 Autor: Haroldo B Passos / InfinitusWeb
-Copyrirght: 2010 / 2020 Versão: 1.01.001 */
+Copyrirght: 2010 / 2020 Versão: 1.01.001 
+*/
 class IWPdf
 {
 	public $iwPdf;
