@@ -76,17 +76,13 @@ class IWPdf
 	{
 		$this->numCells = 1;
 
-		$pars = $this->parsToObj($pars, 'x=0,y=0,w=0,h=0,align=L,border=0,l=0,font= ; ; ,color=0;-1;-1;fill=0,link= ,stretch=0,calign= , valign=, multCell=0');
+		$pars = $this->parsToObj($pars, 'x=0,y=0,w=0,h=0,align=L,border=0,ln=0,font= ; ; ,color=0;-1;-1,fill=0,link= ,stretch=0, calign= , valign=, multCell=0');
 		$mCellPars = $this->parsToObj($mCellPars, 'reseth=1,ishtml=0,autopadding=1,maxh=0');
 
 		if ($pars->multCell) {
 			$pars->align = 'J';
 			$pars->ln = 1;
 		}
-
-		echo '<pre>';
-		print_r($pars);
-		echo '</pre>';
 
 		$x = $pars->x;
 		$y = $pars->y;
@@ -108,10 +104,10 @@ class IWPdf
 			}
 		}
 
-		if (!$pars->multColor) {
+		if (!$pars->multCell) {
 			//#Cell(w, h = 0, txt = '', border = 0, ln = 0, align = '', fill = 0, link = nil, stretch = 0, ignore_min_height = false, calign = 'T', valign = 'M') 
 			$this->iwPdf->SetXY($x, $y);
-			$this->iwPdf->Cell($pars->w, $pars->h, $txt, $pars->border, $pars->ln, $pars->align, $pars->fill, $pars->link, $pars->strech, false, $pars->calign, $pars->valign);
+			$this->iwPdf->Cell($pars->w, $pars->h, $txt, $pars->border, $pars->ln, $pars->align, $pars->fill, $pars->link, $pars->stretch, false, $pars->calign, $pars->valign);
 		} else {
 			//#MultiCell(w, h, txt, border = 0, align = 'J', fill = 0, ln = 1, x = '', y = '', reseth = true, stretch = 0, ishtml = false, autopadding = true, maxh = 0)			$this->iwPdf->SetXY($x, $y - ($pars->h / 2));
 			$pars->reseth = $pars->reseth ? true : false;
