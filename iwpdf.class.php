@@ -1,10 +1,10 @@
 <?php
-/* 
-Classe iwPdf sdsds
-Extende métodos a instância principal da classe TCPDF 
-Autor: Haroldo B Passos / InfinitusWeb
-Copyrirght: 2010 / 2020 Versão: 1.01.001 
-*/
+/* Classe iwPdf sdsds
+	Extende métodos a instância principal da classe TCPDF 
+	utor: Haroldo B Passos / InfinitusWeb
+	Copyrirght: 2010 / 2020 Versão: 1.01.001 
+	Proximas alterações: Trabalhar com propriedadesanterior, melhorar font e fill, metodo debug
+	*/
 
 class IWPDF
 {
@@ -26,15 +26,15 @@ class IWPDF
 	// Page footer
 	public function pFooter()
 	{
-		$this->iwPdf->SetY(-15);
-		$this->iwPdf->SetFont('helvetica', 'I', 8);
-		$this->iwPdf->Cell(0, 10, 'Page ' . $this->iwPdf->getAliasNumPage() . '/' . $this->iwPdf->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+		$this->iwPdf->SetY(-5);
+		$this->iwPdf->SetFont('helvetica', 'I', 7);
+		$this->iwPdf->Cell(0, 0, 'Página ' . $this->iwPdf->getAliasNumPage() . '/' . $this->iwPdf->getAliasNbPages(),  $this->iwPdf->getPageHeight(), false, 'C', 0, '', 0, false, 'T', 'M');
 	}
 
 	/*Print Cell (txt, 'x=0,y=0,w=0,h=0,align=L,border=0,l=0,font= ; ; ,multCell=N')
-	Parâmpetro Posicional:
-		txt -> texto a ser impresso
-	parametros nomeados:
+		Parâmpetro Posicional:
+			txt -> texto a ser impresso
+		parametros nomeados:
 		x->  distância da margem esquerda para inicio da impressão em milímetros (se 0 pega o último)
 		y -> distância da margem superior para inicio da impressão em milímetros (se 0 pega o último)
 		w -> largura do elemento impresso em milímetros (se 0 pega o último)
@@ -46,8 +46,8 @@ class IWPDF
 				1: default para multcell, 0: default para cell.
 		font -> (family; Type; Size) parâmetros internos posicionais, não obrigatórios, se não informados mantém o último utilizado.
 		 	-> family -> times (Times-Roman),timesb (Times-Bold),timesi (Times-Italic),timesbi (Times-BoldItalic)
-		 			,helvetica (Helvetica),helveticab (Helvetica-Bold),helveticai (Helvetica-Oblique),helveticabi (Helvetica-BoldOblique),courier (Courier),
-					,courierb (Courier-Bold),courieri (Courier-Oblique),courierbi (Courier-BoldOblique)
+					 ,helvetica (Helvetica),helveticab (Helvetica-Bold),helveticai (Helvetica-Oblique),helveticabi (Helvetica-BoldOblique)
+					 ,courier (Courier),courierb (Courier-Bold),courieri (Courier-Oblique),courierbi (Courier-BoldOblique)
 					,symbol (Symbol),zapfdingbats (ZapfDingbats)
 					* fontes padrões ou fonte adicionada por addFont().
 			-> style -> estilo da fonte(*vazio: regular, B: bold e/ou I: italic e/ou U: underline e/ou D: line trough e/ou O: overline
@@ -75,11 +75,10 @@ class IWPDF
 		by Haroldo
 		*/
 	function pCell($txt, $pars = '', $mCellPars = '')
-
 	{
 		$this->numCells = 1;
 
-		$pars = $this->parsToObj($pars, 'x=0,y=0,w=0,h=0,align=L,border=0,ln=0,font= ; ; ,color=0;-1;-1,fill=0,link= ,stretch=0, calign= , valign=, multCell=0');
+		$pars = $this->parsToObj($pars, 'x=0,y=0,w=0,h=0,align=L,border=0,ln=0,font=helvetica; ;10,color=0;-1;-1,fill=0,link= ,stretch=0, calign= , valign= , multCell=0');
 		$mCellPars = $this->parsToObj($mCellPars, 'reseth=1,ishtml=0,autopadding=1,maxh=0');
 
 		if ($pars->multCell) {
@@ -90,21 +89,23 @@ class IWPDF
 		$x = $pars->x;
 		$y = $pars->y;
 
-
-		//$align = $pars->align;
-		//$align = ($align == '0') ? "L" : $align;
-
 		$x = $x == 0 ? $this->iwPdf->GetX() : $x;
 		$y = $y == 0 ? $this->iwPdf->GetY() : $y;
 
+
 		if (!empty($pars->font)) {
-			$fontFamily = isset($pars->font[0]) ? $pars->font[0] : $pars->font;
+			$fontFamily = isset($pars->font[0]) ? $pars->font[0] : 'helvetica';
 			$fontStyle = isset($pars->font[1]) ? $pars->font[1] : '';
 			$fontSize = isset($pars->font[2]) ? $pars->font[2] : 0;
 			$this->iwPdf->SetFont($fontFamily, $fontStyle, $fontSize);
 			if (isset($pars->color)) {
 				$this->iwPdf->SetTextColor($pars->color[0], $pars->color[1], $pars->color[2]);
 			}
+		}
+
+		if (is_array($pars->fill)) {
+
+			$this->iwPdf->SetFillColor($pars->fill[0], $pars->fill[1], $pars->fill[2]);
 		}
 
 		if (!$pars->multCell) {
