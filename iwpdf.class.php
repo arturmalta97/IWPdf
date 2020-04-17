@@ -1,5 +1,5 @@
 <?php
-/* Classe iwPdf sdsds
+/* Classe iwPdf
 	Extende métodos a instância principal da classe TCPDF 
 	utor: Haroldo B Passos / InfinitusWeb
 	Copyrirght: 2010 / 2020 Versão: 1.01.001 
@@ -109,6 +109,7 @@ class IWPDF
 		}
 
 		if (!$pars->multCell) {
+			//echo "<br> Cell $x, $y";
 			//#Cell(w, h = 0, txt = '', border = 0, ln = 0, align = '', fill = 0, link = nil, stretch = 0, ignore_min_height = false, calign = 'T', valign = 'M') 
 			$this->iwPdf->SetXY($x, $y);
 			$this->iwPdf->Cell($pars->w, $pars->h, $txt, $pars->border, $pars->ln, $pars->align, $pars->fill, $pars->link, $pars->stretch, false, $pars->calign, $pars->valign);
