@@ -28,7 +28,8 @@ class IWPDF
 	{
 		$this->iwPdf->SetY(-5);
 		$this->iwPdf->SetFont('helvetica', 'I', 7);
-		$this->iwPdf->Cell(0, 0, 'Página ' . $this->iwPdf->getAliasNumPage() . '/' . $this->iwPdf->getAliasNbPages(),  $this->iwPdf->getPageHeight(), false, 'C', 0, '', 0, false, 'T', 'M');
+		//$this->iwPdf->getPageHeight()
+		$this->iwPdf->Cell(0, 0, 'Página ' . $this->iwPdf->getAliasNumPage() . '/' . $this->iwPdf->getAliasNbPages(),  0 , false, 'C', 0, '', 0, false, 'T', 'M');
 	}
 
 	/*Print Cell (txt, 'x=0,y=0,w=0,h=0,align=L,border=0,l=0,font= ; ; ,multCell=N')
